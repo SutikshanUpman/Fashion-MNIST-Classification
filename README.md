@@ -81,7 +81,3 @@ pip install tensorflow numpy pandas matplotlib
 **Sutikshan Upman**  
 AI/ML Enthusiast | Exploring Neural Networks with TensorFlow
 
----
-
-## 🪪 License
-This project is released under the **MIT License**.
