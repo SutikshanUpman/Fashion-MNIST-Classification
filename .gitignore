@@ -1,0 +1,14 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Trained models
+*.keras
+*.h5
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
