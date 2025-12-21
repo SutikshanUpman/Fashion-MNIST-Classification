@@ -1,83 +1,110 @@
+# 👕 Fashion-MNIST Classification
 
-# Fashion MNIST Classification using Artificial Neural Network (ANN)
+A clean and well-regularized **image classification project** on the **Fashion-MNIST** dataset using **Artificial Neural Networks (ANN)** built with **TensorFlow / Keras**.
 
-## 📘 Project Overview
-This project demonstrates image classification on the **Fashion MNIST** dataset using a **pure Artificial Neural Network (ANN)** — *no Convolutional Neural Networks (CNNs)* or *Recurrent Neural Networks (RNNs)* are used.*
-
-The model is implemented using **TensorFlow** and **Keras**, proving that even a simple feedforward ANN can achieve strong performance on image data.
+This repository focuses on **understanding learning behavior, regularization, and evaluation**, rather than jumping straight to CNNs.
 
 ---
 
-## 🧠 Model Architecture
-The ANN follows a **fully connected (dense) layer architecture**:
+## 📌 Project Highlights
+- Uses a **pure ANN (Dense Network)** — no CNN layers in the current implementation
+- Emphasis on **training stability**, **overfitting control**, and **clean ML workflow**
+- Proper use of **Batch Normalization**, **Dropout**, and **Early Stopping**
+- Achieves **~89–90% accuracy** on Fashion-MNIST with an MLP
 
-1. **Input Layer:** `Flatten(input_shape=(28, 28))` – reshapes 2D image data into 1D vectors.  
-2. **Hidden Layers:**
-   - Dense layer with **512 neurons**, activation = **GELU**
-   - **Batch Normalization** for stable training
-   - **Dropout (0.3)** to reduce overfitting
-   - Dense layer with **256 neurons**, activation = **GELU**
-3. **Output Layer:** Dense(10, activation='softmax') for multi-class classification.
+---
 
-> ⚠️ **Highlight:** This project uses *only an ANN*. There are **no CNN or RNN layers** — making it a demonstration of how dense layers alone can handle image recognition tasks.
+## 🧠 Model Architecture (ANN)
+
+Input (28×28 grayscale image)  
+→ Flatten  
+→ Dense (384) + GELU  
+→ BatchNorm + Dropout  
+→ Dense (256) + GELU  
+→ BatchNorm + Dropout  
+→ Dense (128) + GELU  
+→ Dropout  
+→ Dense (10) + Softmax  
+
+### 🔍 Design Choices
+- **GELU activation** for smoother gradients
+- **Batch Normalization before Dropout** for stable convergence
+- **AdamW optimizer** to reduce weight overfitting
+- **EarlyStopping** to prevent training past optimal epoch
 
 ---
 
 ## 📊 Dataset
-**Fashion MNIST Dataset** (from TensorFlow Datasets):  
-- 60,000 training images  
-- 10,000 testing images  
-- Each image is 28×28 grayscale, representing clothing categories (e.g., shirts, trousers, shoes).
+**Fashion-MNIST**
+- 60,000 training images
+- 10,000 test images
+- 28×28 grayscale images
+- 10 clothing categories
 
-**Preprocessing:**
-- Normalized pixel values by dividing by 255.
-- Visualized 9 sample images with labels before training.
+### Preprocessing
+- Pixel normalization (/255)
+- One-hot encoding of labels
+- Visualization of samples before training
 
 ---
 
-## 🚀 Training Details
-| Parameter | Value |
-|------------|--------|
-| Optimizer | RMSprop |
-| Loss Function | Sparse Categorical Crossentropy |
-| Metric | Accuracy |
-| Epochs | 50 |
-| Batch Size | 128 |
-| Validation Split | 20% |
+## 🚀 Training Configuration
 
-Plots of training vs validation accuracy were generated to visualize learning progress.
+Optimizer: AdamW  
+Loss: Categorical Crossentropy  
+Metric: Accuracy  
+Batch Size: 64  
+Epochs: Up to 30 (Early Stopping enabled)  
+Validation: 20% split  
+
+Training curves show **minimal overfitting** and **healthy generalization gap**.
 
 ---
 
 ## 📈 Results
-The ANN achieved solid accuracy on both training and test datasets, confirming that feedforward dense layers can perform well for simpler image classification problems without CNNs or RNNs.
+- **Test Accuracy:** ~89–90%
+- Smooth convergence
+- No validation collapse
+- Model stops at optimal epoch via EarlyStopping
+
+This performance is **strong for a pure ANN** on image data.
 
 ---
 
-## 🧰 Dependencies
-Install the required libraries using:
+## ▶️ How to Run
 
-```bash
-pip install tensorflow numpy pandas matplotlib
-```
+pip install tensorflow numpy matplotlib scikit-learn  
+jupyter lab  
 
----
+Open `main.ipynb` and run all cells sequentially.
 
-## ▶️ Usage
-1. Clone or download this repository.  
-2. Open **`main.ipynb`** in Jupyter Notebook.  
-3. Run all cells sequentially to train and evaluate the ANN model.
+> Trained model files are intentionally **not committed** to keep the repository lightweight and reproducible.
 
 ---
 
 ## 📚 Key Learnings
-- Showcases how **ANNs** (without CNNs or RNNs) can classify image data.  
-- Demonstrates the effects of **Batch Normalization** and **Dropout** on model generalization.  
-- Provides an end-to-end example of model training, evaluation, and visualization using Keras.
+- Dense networks can still perform competitively on image tasks
+- Proper **regularization > deeper networks**
+- EarlyStopping is often more valuable than extra epochs
+- Clean Git practices matter in ML projects
+
+---
+
+## 🔮 Future Work
+
+### 🔹 Model Comparisons
+- LogisticRegression (max_iter=1000)
+- RandomForestClassifier (n_estimators=100)
+- ANN vs CNN performance comparison
+
+### 🔹 Deep Learning Enhancements
+- CNN-based architecture
+- Custom training loop with tf.GradientTape
+- Visualization of hidden layer activations
+- Confusion matrix & error analysis
 
 ---
 
 ## 👤 Author
 **Sutikshan Upman**  
-AI/ML Enthusiast | Exploring Neural Networks with TensorFlow
-
+Aspiring AI Engineer | Exploring Neural Networks & ML Foundations
