@@ -1,36 +1,21 @@
-# 👕 Fashion-MNIST Classification
+# 👕 Fashion-MNIST Image Classification (ANN & CNN)
 
-A clean and well-regularized **image classification project** on the **Fashion-MNIST** dataset using **Artificial Neural Networks (ANN)** built with **TensorFlow / Keras**.
+A **comparative deep learning project** on the **Fashion-MNIST** dataset exploring how **Artificial Neural Networks (ANN)** and **Convolutional Neural Networks (CNN)** perform on low-resolution image data using **TensorFlow / Keras**.
 
-This repository focuses on **understanding learning behavior, regularization, and evaluation**, rather than jumping straight to CNNs.
+This project emphasizes **learning behavior, regularization, and generalization**, rather than chasing accuracy numbers blindly.
 
 ---
 
 ## 📌 Project Highlights
-- Uses a **pure ANN (Dense Network)** — no CNN layers in the current implementation
-- Emphasis on **training stability**, **overfitting control**, and **clean ML workflow**
-- Proper use of **Batch Normalization**, **Dropout**, and **Early Stopping**
-- Achieves **~89–90% accuracy** on Fashion-MNIST with an MLP
-
----
-
-## 🧠 Model Architecture (ANN)
-
-Input (28×28 grayscale image)  
-→ Flatten  
-→ Dense (384) + GELU  
-→ BatchNorm + Dropout  
-→ Dense (256) + GELU  
-→ BatchNorm + Dropout  
-→ Dense (128) + GELU  
-→ Dropout  
-→ Dense (10) + Softmax  
-
-### 🔍 Design Choices
-- **GELU activation** for smoother gradients
-- **Batch Normalization before Dropout** for stable convergence
-- **AdamW optimizer** to reduce weight overfitting
-- **EarlyStopping** to prevent training past optimal epoch
+- Implements both **ANN (MLP)** and **CNN** models on the same dataset
+- Clean and reproducible **machine learning workflow**
+- Strong focus on **overfitting control** and **validation analysis**
+- Uses modern best practices:
+  - **AdamW optimizer**
+  - **Batch Normalization**
+  - **Dropout**
+  - **EarlyStopping** and **ReduceLROnPlateau**
+- Demonstrates a realistic case where **CNN does not significantly outperform ANN** due to dataset limitations
 
 ---
 
@@ -42,69 +27,126 @@ Input (28×28 grayscale image)
 - 10 clothing categories
 
 ### Preprocessing
-- Pixel normalization (/255)
-- One-hot encoding of labels
-- Visualization of samples before training
+- Pixel normalization (`/255`)
+- Shape handling:
+  - ANN → flattened `(784)`
+  - CNN → `(28, 28, 1)`
+- Sample visualization before training
+
+---
+
+## 🧠 Models Implemented
+
+### 🔹 Artificial Neural Network (ANN)
+**Purpose:** Strong baseline & regularization study
+
+**Architecture**
+```
+Input (28×28)
+→ Flatten
+→ Dense (384) + GELU
+→ BatchNorm + Dropout
+→ Dense (256) + GELU
+→ BatchNorm + Dropout
+→ Dense (128) + GELU
+→ Dropout
+→ Dense (10) + Softmax
+```
+
+**Key Design Choices**
+- **GELU activation** for smoother gradients
+- **BatchNorm before Dropout** for stable convergence
+- **AdamW optimizer** to reduce weight overfitting
+- **EarlyStopping** to prevent over-training
+
+**Performance**
+- Test Accuracy: **~89–90%**
+- Smooth convergence
+- Minimal overfitting
+
+---
+
+### 🔹 Convolutional Neural Network (CNN)
+**Purpose:** Evaluate spatial learning advantage on Fashion-MNIST
+
+**Architecture**
+```
+Input (28×28×1)
+→ Conv2D (32) + ReLU
+→ BatchNorm
+→ MaxPooling
+→ Conv2D (64) + ReLU
+→ BatchNorm
+→ MaxPooling
+→ Flatten
+→ Dense (128) + ReLU
+→ Dropout
+→ Dense (10) + Softmax
+```
+
+**Observations**
+- Higher **training accuracy** than ANN
+- Validation accuracy plateaus early
+- **Test accuracy similar to ANN (~91–92%)**
+
+This behavior highlights **dataset saturation** and mild overfitting rather than model failure.
 
 ---
 
 ## 🚀 Training Configuration
-
-Optimizer: AdamW  
-Loss: Categorical Crossentropy  
-Metric: Accuracy  
-Batch Size: 64  
-Epochs: Up to 30 (Early Stopping enabled)  
-Validation: 20% split  
-
-Training curves show **minimal overfitting** and **healthy generalization gap**.
+- Optimizer: **AdamW**
+- Loss: **Sparse Categorical Crossentropy**
+- Metric: **Accuracy**
+- Batch Size: `64`
+- Epochs: up to `30`
+- Validation Split: `20%`
+- Callbacks:
+  - EarlyStopping (restore best weights)
+  - ReduceLROnPlateau
 
 ---
 
-## 📈 Results
-- **Test Accuracy:** ~89–90%
-- Smooth convergence
-- No validation collapse
-- Model stops at optimal epoch via EarlyStopping
+## 📈 Results Summary
+| Model | Test Accuracy |
+|-----|--------------|
+| ANN | ~89–90% |
+| CNN | ~91–92% |
 
-This performance is **strong for a pure ANN** on image data.
+> CNN improves representation capacity but does not significantly improve generalization on Fashion-MNIST due to low image complexity.
+
+---
+
+## 🧠 Key Learnings
+- CNNs are **not automatically superior** on all image datasets
+- Dataset complexity limits achievable gains
+- Regularization often matters more than depth
+- Validation behavior is more important than training accuracy
+- Strong baselines are critical before adding complexity
 
 ---
 
 ## ▶️ How to Run
-
-pip install tensorflow numpy matplotlib scikit-learn  
-jupyter lab  
+```bash
+pip install tensorflow numpy matplotlib scikit-learn
+jupyter lab
+```
 
 Open `main.ipynb` and run all cells sequentially.
 
-> Trained model files are intentionally **not committed** to keep the repository lightweight and reproducible.
-
----
-
-## 📚 Key Learnings
-- Dense networks can still perform competitively on image tasks
-- Proper **regularization > deeper networks**
-- EarlyStopping is often more valuable than extra epochs
-- Clean Git practices matter in ML projects
+> Trained models are not committed to keep the repository lightweight and reproducible.
 
 ---
 
 ## 🔮 Future Work
-
-### 🔹 Model Comparisons
-- LogisticRegression (max_iter=1000)
-- RandomForestClassifier (n_estimators=100)
-- ANN vs CNN performance comparison
-
-### 🔹 Deep Learning Enhancements
-- CNN-based architecture
-- Custom training loop with tf.GradientTape
-- Visualization of hidden layer activations
+- Data augmentation to improve CNN generalization
+- ANN vs CNN comparison plots
 - Confusion matrix & error analysis
+- Evaluation on higher-complexity datasets (e.g., CIFAR-10)
+- Transfer learning with lightweight CNNs
 
 ---
 
 ## 👤 Author
 **Sutikshan Upman**  
-Aspiring AI Engineer | Exploring Neural Networks & ML Foundations
+Aspiring AI / ML Engineer  
+Focused on fundamentals, model behavior, and real-world learning
